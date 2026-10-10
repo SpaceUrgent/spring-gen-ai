@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${chat} ? ${chat.title} : 'New chat')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: topnav}"></nav>
+<div class="app-body">
+    <aside th:replace="~{fragments/layout :: sidenav('chats')}"></aside>
+    <main class="app-main app-main-chat">
+        <div class="app-chat">
+            <header class="app-chat-header">
+                <h1 class="h5 mb-0 text-truncate" th:text="${chat} ? ${chat.title} : 'New chat'">New chat</h1>
+            </header>
+
+            <div id="chat-scroll" class="app-chat-scroll">
+                <div id="messages" class="app-messages">
+                    <div th:if="${chat == null}" class="app-empty">
+                        <i class="bi bi-chat-dots"></i>
+                        <p class="mb-0">Ask anything about one of your books. Mention the book title in your question.</p>
+                    </div>
+                    <th:block th:fragment="messages">
+                        <div th:each="message : ${messages}" class="app-message"
+                             th:classappend="${message.role.name() == 'USER'} ? 'app-message-user' : 'app-message-assistant'">
+                            <div class="app-message-bubble" th:text="${message.content}">Message</div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="app-chat-input">
+                <div th:replace="~{fragments/layout :: pageAlert}"></div>
+                <form class="d-flex gap-2 align-items-end"
+                      th:attr="hx-post=${chat} ? @{/chats/{id}/messages(id=${chat.id})} : @{/chats}"
+                      hx-target="#messages" hx-swap="beforeend"
+                      hx-indicator="#chat-indicator" hx-disabled-elt="find button[type=submit], find textarea"
+                      hx-on:message-sent="this.reset()">
+                    <label for="chat-message" class="visually-hidden">Your question</label>
+                    <textarea id="chat-message" name="message" class="form-control app-chat-textarea" rows="2"
+                              required placeholder="Ask about a book… (Enter to send, Shift+Enter for a new line)"></textarea>
+                    <button type="submit" class="btn btn-primary" aria-label="Send">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </form>
+                <div id="chat-indicator" class="htmx-indicator small text-body-secondary mt-2">
+                    <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                    Searching the book and writing an answer…
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

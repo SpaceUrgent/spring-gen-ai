@@ -1,0 +1,73 @@
+{
+  "title" : "Control and Decay",
+  "orientation" : "landscape",
+  "scene" : {
+    "description" : "A sterile white room features a towering Director gesturing to scientific equipment, while Linda lies motionless on a hospital bed. A pug-faced twin is suspended in an incubator, and medical monitors track vital signs. Cold blue light highlights the oppressive atmosphere of genetic control.",
+    "action" : "Director demonstrates reproductive technology while Linda dies in her final moments",
+    "mood" : "Oppressive and fearful"
+  },
+  "characters" : [ {
+    "name" : "Director",
+    "role" : "Demonstrating reproductive technology",
+    "age" : "60-70 years",
+    "build" : "Tall, thin, upright",
+    "face" : "Elongated, with pale, corpse-colored skin",
+    "hair" : "Thin, silver strands",
+    "expression" : "Menacing geniality",
+    "pose" : "Standing at a podium with arms spread wide",
+    "clothing" : [ "White overalls", "Pale rubber gloves" ],
+    "equipment" : [ "Clipboard with blueprints" ],
+    "distinguishingFeatures" : [ "Long chin", "Prominent teeth", "Floridly curved lips" ]
+  }, {
+    "name" : "Linda",
+    "role" : "Dying in her final moments",
+    "age" : "44 years",
+    "build" : "Fat, distended, flaccid",
+    "face" : "Reddened and sweaty",
+    "hair" : "Unkempt and greasy",
+    "expression" : "Terrified gasps",
+    "pose" : "Lying motionless with labored breathing",
+    "clothing" : [ "White hospital pajamas" ],
+    "equipment" : [ "Hospital bed" ],
+    "distinguishingFeatures" : [ "Bad teeth", "Blotched complexion" ]
+  }, {
+    "name" : "Pug-faced twin",
+    "role" : "Genetically engineered infant",
+    "age" : "Unknown",
+    "build" : "Small, rounded",
+    "face" : "Smooth and pale",
+    "hair" : "Short and matted",
+    "expression" : "Unfocused stare",
+    "pose" : "Suspended in an incubator",
+    "clothing" : [ "Grey hospital gown" ],
+    "equipment" : [ "Medical monitor" ],
+    "distinguishingFeatures" : [ "Flattened muzzle", "Wide-set eyes" ]
+  } ],
+  "environment" : {
+    "location" : "Interior of the Conditioning Centre",
+    "era" : "World State, A.F. 632",
+    "timeOfDay" : "Morning",
+    "weather" : "Cold, bleak",
+    "lighting" : "Cold, harsh overhead lights with frozen blue shadows",
+    "terrain" : "Indoor",
+    "vegetation" : "None",
+    "architecture" : "Glass and nickel equipment with sterile white walls",
+    "props" : [ "Test-tubes", "Incubators", "World State motto", "Hospital bed", "Pug-faced twin", "Head Nurse" ]
+  },
+  "composition" : {
+    "shotType" : "Wide shot",
+    "cameraAngle" : "Eye level",
+    "focalPoint" : "Director's outstretched arms and Linda's hospital bed",
+    "foreground" : "Medical monitors and test-tubes",
+    "background" : "Squat grey building with 34-story windows"
+  },
+  "style" : {
+    "style" : "Photorealistic sci-fi",
+    "medium" : "Photograph",
+    "colorPalette" : "Cold blue-grey",
+    "detail" : "Symmetrical composition"
+  },
+  "prompt" : "Photorealistic sci-fi scene of the Central London Hatchery's Conditioning Centre: Director stands at a podium with arms spread wide, gesturing to test-tubes and incubators while Linda lies motionless on a hospital bed with labored breathing, surrounded by medical monitors and a pug-faced twin in an incubator. Cold blue light casts harsh shadows across sterile white walls etched with the World State motto. Symmetrical composition emphasizes the oppressive atmosphere of genetic control and human decay.",
+  "negativePrompt" : null,
+  "assumptions" : [ "Director's hair is thin and silver, matching World State's emphasis on youth", "Linda's hospital pajamas are plain white with frayed edges", "Head Nurse wears a grey-and-white striped uniform with a name tag", "Pug-faced twin has a flattened muzzle and wide-set eyes", "Director's gloves are pale rubber with cracked seams", "Hospital bed has a metal frame and thin, white linens", "World State motto is etched in faded gold on the building" ]
+}

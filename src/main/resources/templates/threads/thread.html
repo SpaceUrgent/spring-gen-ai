@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${thread.title})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: topnav}"></nav>
+<div class="app-body">
+    <aside th:replace="~{fragments/layout :: sidenav('threads')}"></aside>
+    <main class="app-main">
+        <div id="thread-body" class="app-page" th:fragment="body">
+            <div class="mb-4">
+                <h1 class="h4 mb-1" th:text="${thread.title}">Thread</h1>
+                <div class="text-body-secondary">
+                    <i class="bi bi-book"></i>
+                    <span th:text="${thread.book.title}">Book</span>
+                    <span class="mx-1">·</span>
+                    <span th:text="${generations.size()} + ' ' + (${generations.size() == 1} ? 'image' : 'images')">0 images</span>
+                </div>
+            </div>
+
+            <div th:replace="~{fragments/layout :: pageAlert}"></div>
+
+            <section class="mb-5" aria-labelledby="request-title">
+                <form class="card card-body"
+                      th:attr="hx-put=@{/threads/{id}(id=${thread.id})}"
+                      hx-target="#thread-body" hx-swap="outerHTML"
+                      hx-indicator="#update-indicator" hx-disabled-elt="find button[type=submit]">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h2 id="request-title" class="h6 mb-0">Request</h2>
+                        <span class="small text-body-secondary">Edit and generate again</span>
+                    </div>
+
+                    <th:block th:replace="~{threads/form :: fields}"></th:block>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-arrow-repeat"></i>
+                            <span>Generate again</span>
+                        </button>
+                        <div th:replace="~{threads/form :: indicator('update-indicator')}"></div>
+                    </div>
+                </form>
+            </section>
+
+            <section aria-labelledby="images-title">
+                <h2 id="images-title" class="h6 mb-3">Generated images</h2>
+                <div th:if="${generations.isEmpty()}" class="app-empty">
+                    <i class="bi bi-image"></i>
+                    <p class="mb-0">No images yet. Adjust the request and generate again.</p>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-4">
+                    <div class="col" th:each="generation, iter : ${generations}">
+                        <div class="card h-100 app-image-card">
+                            <a th:href="@{/api/images/{id}(id=${generation.imageId})}" target="_blank" rel="noopener"
+                               class="app-image-frame">
+                                <img class="card-img-top" loading="lazy"
+                                     th:src="@{/api/images/{id}(id=${generation.imageId})}"
+                                     th:alt="${generation.imageSpec.title} ?: 'Generated image'">
+                            </a>
+                            <div class="card-body d-flex align-items-start gap-2">
+                                <div class="flex-grow-1 min-w-0">
+                                    <div class="fw-medium text-truncate"
+                                         th:text="${generation.imageSpec.title} ?: 'Untitled'">Title</div>
+                                    <div class="small text-body-secondary">
+                                        <span th:text="${#temporals.format(generation.creationAt, 'yyyy-MM-dd HH:mm')}">date</span>
+                                        <span th:if="${iter.first}" class="badge text-bg-primary ms-1">Latest</span>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary"
+                                        data-bs-toggle="modal"
+                                        th:attr="data-bs-target='#details-' + ${generation.imageId}"
+                                        title="Details" aria-label="Show details">
+                                    <i class="bi bi-info-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" tabindex="-1" aria-hidden="true"
+                             th:id="'details-' + ${generation.imageId}"
+                             th:attr="aria-labelledby='details-title-' + ${generation.imageId}">
+                            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title h5" th:id="'details-title-' + ${generation.imageId}"
+                                            th:text="${generation.imageSpec.title} ?: 'Image details'">Details</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <dl class="app-details">
+                                            <dt>Prompt</dt>
+                                            <dd th:text="${generation.userRequest.prompt}">prompt</dd>
+
+                                            <th:block th:if="${generation.userRequest.negativePrompt}">
+                                                <dt>Avoid</dt>
+                                                <dd th:text="${generation.userRequest.negativePrompt}">negative</dd>
+                                            </th:block>
+
+                                            <th:block th:with="style=${generation.userRequest.style}">
+                                                <th:block th:if="${style != null and (style.style != null or style.medium != null or style.colorPalette != null or style.detail != null)}">
+                                                    <dt>Style</dt>
+                                                    <dd>
+                                                        <span th:if="${style.style}" th:text="'Style: ' + ${style.style}" class="d-block"></span>
+                                                        <span th:if="${style.medium}" th:text="'Medium: ' + ${style.medium}" class="d-block"></span>
+                                                        <span th:if="${style.colorPalette}" th:text="'Colors: ' + ${style.colorPalette}" class="d-block"></span>
+                                                        <span th:if="${style.detail}" th:text="'Detail: ' + ${style.detail}" class="d-block"></span>
+                                                    </dd>
+                                                </th:block>
+                                            </th:block>
+
+                                            <dt>Orientation</dt>
+                                            <dd th:text="${generation.userRequest.orientation} ? ${#strings.capitalize(generation.userRequest.orientation.value())} : '—'">Landscape</dd>
+
+                                            <dt>Model</dt>
+                                            <dd th:text="${generation.model} ?: '—'">model</dd>
+
+                                            <dt>Generated</dt>
+                                            <dd th:text="${#temporals.format(generation.creationAt, 'yyyy-MM-dd HH:mm:ss')}">date</dd>
+
+                                            <dt>Image prompt</dt>
+                                            <dd th:text="${generation.imageSpec.prompt}">image prompt</dd>
+                                        </dl>
+
+                                        <h4 class="h6 mt-4">Image spec</h4>
+                                        <pre class="app-json"><code th:text="${specs[generation.imageId]}">{}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

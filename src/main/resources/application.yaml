@@ -1,3 +1,36 @@
 spring:
   application:
     name: gen-ai
+  web:
+    resources:
+      chain:
+        strategy:
+          content:
+            enabled: true
+            paths: /js/**,/css/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        gen_ai.client.operation: true
+        spring.ai.chat.client: true
+        spring.ai.advisor: true
+        spring.ai.tool: true
+        db.vector.client.operation: true
+
+app:
+  chat:
+    rag:
+      top-k: 8
+      similarity-threshold: 0.3
+      max-searches: 3
+      max-tool-rounds: 5
+      max-documents: 25

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('New image thread')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: topnav}"></nav>
+<div class="app-body">
+    <aside th:replace="~{fragments/layout :: sidenav('threads')}"></aside>
+    <main class="app-main">
+        <div class="app-page app-page-narrow">
+            <h1 class="h4 mb-1">New image thread</h1>
+            <p class="text-body-secondary mb-4">Choose a book and describe the scene or character to illustrate.</p>
+
+            <div th:replace="~{fragments/layout :: pageAlert}"></div>
+
+            <div th:if="${books.isEmpty()}" class="app-empty">
+                <i class="bi bi-book"></i>
+                <p class="mb-3">There are no books yet.</p>
+                <a class="btn btn-primary" th:href="@{/books}">Upload a book</a>
+            </div>
+
+            <form th:unless="${books.isEmpty()}" class="card card-body"
+                  hx-post="/threads" hx-swap="none"
+                  hx-indicator="#create-indicator" hx-disabled-elt="find button[type=submit]">
+                <div class="mb-3">
+                    <label for="bookId" class="form-label">Book</label>
+                    <select id="bookId" name="bookId" class="form-select" required>
+                        <option value="" th:selected="${form.bookId == null}" disabled>Choose a book…</option>
+                        <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title}"
+                                th:selected="${book.id == form.bookId}">Book</option>
+                    </select>
+                </div>
+
+                <th:block th:replace="~{threads/form :: fields}"></th:block>
+
+                <div class="d-flex align-items-center gap-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-magic"></i>
+                        <span>Generate image</span>
+                    </button>
+                    <div th:replace="~{threads/form :: indicator('create-indicator')}"></div>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

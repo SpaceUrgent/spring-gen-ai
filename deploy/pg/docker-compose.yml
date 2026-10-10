@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: gen_ai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"

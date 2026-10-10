@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="chats">
+    <li th:if="${chats.isEmpty()}" class="app-side-empty">No chats yet</li>
+    <li th:each="chat : ${chats}">
+        <a class="app-side-link app-side-item"
+           th:with="href=@{/chats/{id}(id=${chat.id})}"
+           th:href="${href}"
+           th:classappend="${currentUrl.endsWith(href)} ? 'active'"
+           th:title="${chat.title}">
+            <span class="app-side-label" th:text="${chat.title}">Chat</span>
+        </a>
+    </li>
+</th:block>
+
+<th:block th:fragment="threads">
+    <li th:if="${threads.isEmpty()}" class="app-side-empty">No images yet</li>
+    <li th:each="thread : ${threads}">
+        <a class="app-side-link app-side-item"
+           th:with="href=@{/threads/{id}(id=${thread.id})}"
+           th:href="${href}"
+           th:classappend="${currentUrl.endsWith(href)} ? 'active'"
+           th:title="${thread.title}">
+            <span class="app-side-label" th:text="${thread.title}">Thread</span>
+        </a>
+    </li>
+</th:block>
+
+</body>
+</html>

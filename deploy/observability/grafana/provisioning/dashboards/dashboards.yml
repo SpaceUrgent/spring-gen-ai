@@ -1,0 +1,9 @@
+apiVersion: 1
+
+providers:
+  - name: gen-ai
+    folder: Book Illustrator
+    type: file
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards
