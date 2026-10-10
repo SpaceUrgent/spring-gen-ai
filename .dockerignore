@@ -1,0 +1,16 @@
+# build output and IDE files
+target/
+.idea/
+.vscode/
+*.iml
+
+# local data and secrets (application-local.yml holds the OpenAI key), never baked into the image
+local/
+**/*-local.*
+.env
+
+
+.git/
+Dockerfile
+docker-compose.yml
+deploy/

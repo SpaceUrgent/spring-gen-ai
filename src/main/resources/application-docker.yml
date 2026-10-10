@@ -1,0 +1,49 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+  ai:
+    model:
+      chat: ollama
+      embedding: ollama
+      image: openai
+      audio:
+        speech: none
+        transcription: none
+      moderation: none
+    ollama:
+      base-url: ${OLLAMA_BASE_URL}
+      chat:
+        model: ${OLLAMA_CHAT_MODEL}
+      embedding:
+        options:
+          model: ${OLLAMA_EMBEDDING_MODEL}
+    vectorstore:
+      pgvector:
+      index-type: HNSW
+      distance-type: COSINE_DISTANCE
+      dimensions: 768
+      max-document-batch-size: ${VS_MAX_DOC_BATCH_SIZE:10000}
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      image:
+        model: ${OPEN_AI_IMAGE_MODEL}
+
+chat-client:
+  enable-logging: ${ENABLE_CHAT_CLIENT_LOGGING}
+

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Error')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: topnav}"></nav>
+<div class="app-body">
+    <aside th:replace="~{fragments/layout :: sidenav('')}"></aside>
+    <main class="app-main">
+        <div class="app-page">
+            <h1 class="h4 mb-3">
+                <span th:text="${status} ?: 'Error'">Error</span>
+            </h1>
+            <div class="alert alert-danger" role="alert"
+                 th:text="${#strings.isEmpty(message)} ? 'Something went wrong. Please try again.' : ${message}">Something went wrong.</div>
+            <a class="btn btn-outline-secondary" th:href="@{/books}">
+                <i class="bi bi-arrow-left"></i> Back to books
+            </a>
+        </div>
+    </main>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

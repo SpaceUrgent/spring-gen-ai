@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="fields">
+    <div class="mb-3">
+        <label for="prompt" class="form-label">What to illustrate</label>
+        <textarea id="prompt" name="prompt" class="form-control" rows="3" required
+                  placeholder="Sam and Frodo on the slopes of Mount Doom"
+                  th:text="${form.prompt}"></textarea>
+    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-md-6">
+            <label for="negativePrompt" class="form-label">Avoid <span class="text-body-secondary">(optional)</span></label>
+            <input id="negativePrompt" name="negativePrompt" type="text" class="form-control"
+                   placeholder="text, watermarks, modern objects" th:value="${form.negativePrompt}">
+        </div>
+        <div class="col-md-6">
+            <span class="form-label d-block">Orientation</span>
+            <div class="btn-group w-100" role="group" aria-label="Orientation">
+                <th:block th:each="orientation : ${orientations}">
+                    <input type="radio" class="btn-check" name="orientation"
+                           th:id="'orientation-' + ${orientation.value()}"
+                           th:value="${orientation.name()}"
+                           th:checked="${form.orientation == orientation}">
+                    <label class="btn btn-outline-secondary" th:for="'orientation-' + ${orientation.value()}">
+                        <i class="bi" th:classappend="${orientation.name() == 'LANDSCAPE'} ? 'bi-aspect-ratio' : (${orientation.name() == 'PORTRAIT'} ? 'bi-phone' : 'bi-square')"></i>
+                        <span th:text="${#strings.capitalize(orientation.value())}">Landscape</span>
+                    </label>
+                </th:block>
+            </div>
+        </div>
+    </div>
+
+    <fieldset class="app-fieldset mb-3">
+        <legend class="form-label">Style <span class="text-body-secondary">(optional)</span></legend>
+        <p class="small text-body-secondary mb-3">Type your own or pick a suggestion. Leave empty to let the scene and the book decide.</p>
+        <div class="row g-3">
+            <div th:replace="~{threads/form :: styleInput('style', 'Art style', ${form.style}, ${ {
+                    'Photorealistic',
+                    'Cinematic',
+                    'Realistic Fantasy',
+                    'Dark Fantasy',
+                    'High Fantasy',
+                    'Dark Gothic',
+                    'Gothic Horror',
+                    'Noir',
+                    'Cyberpunk',
+                    'Steampunk',
+                    'Retro-Futuristic',
+                    'Science Fiction',
+                    'Post-Apocalyptic',
+                    'Surreal',
+                    'Whimsical',
+                    'Epic',
+                    'Concept Art',
+                    'Graphic Novel',
+                    'Comic Book',
+                    'Anime-Inspired',
+                    'Vintage Illustration',
+                    'Art Nouveau',
+                    'Art Deco',
+                    'Minimalist'} }, 'e.g. 1970s sci-fi paperback cover')}"></div>
+
+            <div th:replace="~{threads/form :: styleInput('medium', 'Medium', ${form.medium}, ${ {
+                    'Photograph',
+                    'Film Still',
+                    'Digital Art',
+                    'Digital Painting',
+                    'Concept Art',
+                    'Matte Painting',
+                    '3D Render',
+                    'Stylized 3D',
+                    'Clay Render',
+                    'Oil Painting',
+                    'Watercolor',
+                    'Gouache',
+                    'Ink Illustration',
+                    'Pencil Illustration',
+                    'Charcoal',
+                    'Pastel',
+                    'Woodcut',
+                    'Etching',
+                    'Collage',
+                    'Mixed Media'} }, 'e.g. acrylic on wood panel')}"></div>
+
+            <div th:replace="~{threads/form :: styleInput('colorPalette', 'Color palette', ${form.colorPalette}, ${ {
+                    'Natural Colors',
+                    'Neutral',
+                    'Muted Natural Tones',
+                    'Warm Natural Tones',
+                    'Cool Natural Tones',
+                    'Earth Tones',
+                    'Dark and Desaturated',
+                    'Black and Charcoal',
+                    'Black and White',
+                    'Deep Blue and Black',
+                    'Deep Red and Black',
+                    'Black and Gold',
+                    'Dark Earth Tones',
+                    'Cold Blue-Grey',
+                    'Purple and Black',
+                    'Cinematic Warm',
+                    'Cinematic Cool',
+                    'Desaturated Cinematic',
+                    'Muted Cinematic',
+                    'High-Contrast Cinematic',
+                    'Teal and Orange',
+                    'Warm Fantasy',
+                    'Mystical Purple',
+                    'Emerald and Gold',
+                    'Royal Blue and Gold',
+                    'Crimson and Gold',
+                    'Forest Green and Brown',
+                    'Autumn Earth Tones',
+                    'Moonlit Blue',
+                    'Neon Blue and Purple',
+                    'Neon Pink and Cyan',
+                    'Electric Blue',
+                    'Cyan and Black',
+                    'Magenta and Blue',
+                    'Futuristic Monochrome',
+                    'Cold Metallic',
+                    'Sepia',
+                    'Warm Vintage',
+                    'Faded Colors',
+                    'Muted Vintage',
+                    'Antique Paper Tones',
+                    'Monochrome'} }, 'e.g. deep greens and rust red')}"></div>
+
+            <div th:replace="~{threads/form :: styleInput('detail', 'Detail', ${form.detail}, ${ {
+                    'Minimal',
+                    'Clean and Refined',
+                    'Moderately Detailed',
+                    'Highly Detailed',
+                    'Extremely Detailed',
+                    'Fine Surface Details',
+                    'Rich Environmental Details',
+                    'Detailed Character Features',
+                    'Intricate Costume Details',
+                    'Detailed Architecture',
+                    'Detailed Mechanical Elements',
+                    'Rich Material Textures',
+                    'Atmospheric Details',
+                    'Fine Lighting Details',
+                    'Cinematic Environmental Detail',
+                    'Fine Facial Details',
+                    'Intricate Background Details',
+                    'Realistic Skin Texture',
+                    'Realistic Fabric Texture',
+                    'Realistic Hair Details'} }, 'e.g. fine crosshatching')}"></div>
+        </div>
+    </fieldset>
+</th:block>
+
+<!--/* A free text input with a dropdown of suggested values. Picking a suggestion fills the input,
+       which can then be edited. "Custom" clears the input for a value of your own. */-->
+<div th:fragment="styleInput(name, label, value, options, placeholder)" class="col-md-6">
+    <label th:for="${name}" class="form-label small" th:text="${label}">Label</label>
+    <div class="input-group">
+        <input type="text" class="form-control" autocomplete="off"
+               th:id="${name}" th:name="${name}" th:value="${value}"
+               th:placeholder="${placeholder}">
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle app-suggest-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                th:attr="aria-label='Suggested ' + ${#strings.toLowerCase(label)}" title="Suggestions"></button>
+        <ul class="dropdown-menu dropdown-menu-end app-suggest-menu">
+            <li>
+                <button type="button" class="dropdown-item text-body-secondary" data-style-suggestion=""
+                        th:classappend="${!#strings.isEmpty(value) and !#lists.contains(options, value)} ? 'active'">Custom</button>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li th:each="option : ${options}">
+                <button type="button" class="dropdown-item"
+                        th:attr="data-style-suggestion=${option}" th:text="${option}"
+                        th:classappend="${option == value} ? 'active'">Option</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div th:fragment="indicator(id)" th:id="${id}" class="htmx-indicator app-generating">
+    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+    <span>Searching the book and generating the image. This takes up to a minute and a half.</span>
+</div>
+
+</body>
+</html>

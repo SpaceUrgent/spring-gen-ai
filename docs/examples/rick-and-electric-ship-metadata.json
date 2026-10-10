@@ -1,0 +1,61 @@
+{
+  "title" : "Rick and the Artificial Sheep on the Rooftop",
+  "orientation" : "landscape",
+  "scene" : {
+    "description" : "Rick kneels on a rooftop, adjusting the control panel of his electric sheep while Barbour leans against the railing. Morning light filters through radioactive haze, illuminating the mechanical details of the sheep and Rick’s weathered appearance.",
+    "action" : "Rick demonstrates the electric sheep’s control panel to skeptical neighbor Barbour",
+    "mood" : "Somber tension between technological marvel and human skepticism"
+  },
+  "characters" : [ {
+    "name" : "Rick",
+    "role" : "Owner of electric sheep, engaged in technical discussion",
+    "age" : "Late 30s",
+    "build" : "Slender, hunched slightly from age",
+    "face" : "Pale skin with dark circles, narrow eyes",
+    "hair" : "Brown, unkempt, with dirt streaks",
+    "expression" : "Cautious concern",
+    "pose" : "Crouched to examine sheep’s control panel",
+    "clothing" : [ "Wrinkled gray jacket with faded patches", "Dusty gray pants with torn knees" ],
+    "equipment" : [ "Phone in right hand", "Briefcase slung over shoulder" ],
+    "distinguishingFeatures" : [ "Cut on left cheek", "Dust-caked hair" ]
+  }, {
+    "name" : "Barbour",
+    "role" : "Neighbor questioning sheep’s authenticity",
+    "age" : "Late 50s",
+    "build" : "Average height, stocky",
+    "face" : "Ruddy skin with deep wrinkles",
+    "hair" : "White, short and neat",
+    "expression" : "Skeptical scrutiny",
+    "pose" : "Leaning against rooftop railing",
+    "clothing" : [ "Dark overcoat with brass buttons", "Gray scarf" ],
+    "equipment" : [ "Folded newspaper in left hand" ],
+    "distinguishingFeatures" : [ "Square glasses with cracked lenses" ]
+  } ],
+  "environment" : {
+    "location" : "Rooftop of 12-story building",
+    "era" : "Near-future 2045 with hovercar infrastructure",
+    "timeOfDay" : "Morning with soft golden-gray light",
+    "weather" : "Radioactive haze creating light diffusion",
+    "lighting" : "Diffused morning light through radioactive haze",
+    "terrain" : "Concrete slabs with scattered debris",
+    "vegetation" : "No visible plant life",
+    "architecture" : "Modernist apartment building with glass-and-steel facade",
+    "props" : [ "Electric sheep with fleece texture", "Hovercar exhaust plume in distance", "Phone displaying diagnostic readouts" ]
+  },
+  "composition" : {
+    "shotType" : "Medium shot framing both characters",
+    "cameraAngle" : "Low angle emphasizing rooftop height",
+    "focalPoint" : "Rick’s hand adjusting control panel interface",
+    "foreground" : "Briefcase and half-eaten donut on concrete edge",
+    "background" : "Industrial rooftop with faded blue tarps and rusted pipes"
+  },
+  "style" : {
+    "style" : "Photorealistic",
+    "medium" : "Photograph",
+    "colorPalette" : "Futuristic Monochrome",
+    "detail" : "Rich Environmental Details"
+  },
+  "prompt" : "Photorealistic photograph of Rick, late 30s with a cut on his cheek, crouched on a rooftop examining an electric sheep with genuine fleece. The sheep's concealed control panel glows faintly blue, while Barbour, a weathered older man in a dark overcoat, stands nearby holding a newspaper. Morning light filters through radioactive haze, casting soft gray tones over the scene. Rick's phone displays diagnostic data in the foreground, with a briefcase and scattered debris on the concrete. The rooftop features industrial metal panels and rusted pipes under a diffused sky. Futuristic monochrome palette with rich details of dust, haze, and mechanical textures.",
+  "negativePrompt" : "unmentioned characters",
+  "assumptions" : [ "Barbour’s appearance inferred as an older man with a weathered face and a trench coat to match the setting’s tone", "Rooftop structure assumed to have industrial metal panels and a slight incline for practicality", "Electric sheep’s control panel designed with minimalist futuristic interface elements", "Radioactive haze visualized as thin, diffused particles floating in the air" ]
+}
